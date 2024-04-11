@@ -1,8 +1,4 @@
 #include "lexer.h"
-#include <stdlib.h>
-#include <string.h>
-
-
 
 Lexer* lexer_create(const char *input){
     struct Lexer* lexer = malloc(sizeof(struct Lexer));
@@ -11,6 +7,7 @@ Lexer* lexer_create(const char *input){
     lexer->inputLength = strlen(input);
     lexer->position = 0;
     lexer->readPosition = 0;
+    lexer->token_vec = vector_create(sizeof(Token));
 
     _lexer_read_char(lexer);
 
@@ -19,8 +16,7 @@ Lexer* lexer_create(const char *input){
 
 void lexer_clean(Lexer *lexer){
   free(lexer);
-  lexer = NULL;
-  //free(token_vec)
+  free(lexer->token_vec);
 }
 
 static bool _isAtEnd(Lexer* lexer){
@@ -43,4 +39,5 @@ static void _lexer_skip(Lexer* lexer){
     _lexer_read_char(lexer);
   }
 }
+
 
