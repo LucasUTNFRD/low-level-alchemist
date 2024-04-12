@@ -1,5 +1,7 @@
 #include "lexer.h"
 #include "helpers/vector.h"
+#include <stdlib.h>
+
 
 Lexer* lexer_create(const char *input){
     struct Lexer* lexer = malloc(sizeof(struct Lexer));
@@ -73,3 +75,13 @@ void lexer_tokenize(Lexer* lexer){
     lexer_process_char(lexer);
   }
 }
+
+Token* token_create(TokenType type,char *lexeme){
+  Token *token = malloc(sizeof(Token));
+  token->type = type;
+  token->literal = lexeme;
+
+  return token;
+}
+
+

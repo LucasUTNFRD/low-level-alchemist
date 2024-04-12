@@ -7,7 +7,6 @@
 #include <string.h>
 #include "helpers/vector.h"
 
-
 typedef enum{
     TOKEN_TYPE_IDENTIFIER,
     TOKEN_TYPE_KEYWORD,
@@ -45,10 +44,11 @@ void lexer_clean(Lexer *lexer);
 static bool _isAtEnd(struct Lexer* lexer);
 static void _lexer_read_char(struct Lexer* lexer);
 static char _lexer_peek_char(struct Lexer* lexer);
-
+void lexer_tokenize(Lexer *lexer);
+void lexer_process_char(Lexer* lexer);
 
 //token functions
-Token* token_create(TokenType type,char *literal);
+Token* token_create(TokenType type,char *lexeme);
 
 #endif /* LEXER_H */
 

@@ -1,13 +1,20 @@
 #include "lexer.h"
+#include "helpers/vector.h"
+#include <stdio.h>
 
 int main() {
-    const char* input = "Your input string here";
-    struct Lexer* lexer = lexer_create(input);
+  const char *input = "( )";
+  Lexer* lexer = lexer_create(input);
 
-    // Use the lexer...
+  lexer_tokenize(lexer);
+  
+  Vector *tokens = lexer->token_vec;
 
-    // Don't forget to free the memory when you're done
-    // implement some free function for the lexer structure 
-    return 0;
+  printf("Tokens: \n");
+  for(int i = 0; i<4;i++){
+    Token *token = vector_at(tokens,i);
+    printf("Token %d: Type: %d, Literal: %s\n", i, token->type, token->literal);
+  }
+
+  lexer_clean(lexer);
 }
-
