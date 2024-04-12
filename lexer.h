@@ -44,6 +44,8 @@ Lexer* lexer_create(const char *input);
 void lexer_clean(Lexer *lexer);
 static bool _isAtEnd(struct Lexer* lexer);
 static void _lexer_read_char(struct Lexer* lexer);
+static char _lexer_peek_char(struct Lexer* lexer);
+
 
 //token functions
 Token* token_create(TokenType type,char *literal);
