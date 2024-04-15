@@ -8,16 +8,24 @@
 #include "helpers/vector.h"
 
 typedef enum{
-    TOKEN_TYPE_IDENTIFIER,
-    TOKEN_TYPE_KEYWORD,
-    TOKEN_TYPE_OPERATOR,
-    TOKEN_TYPE_SYMBOL,
-    TOKEN_TYPE_NUMBER,
-    TOKEN_TYPE_STRING,
-    TOKEN_TYPE_COMMENT,
-    TOKEN_TYPE_NEWLINE
-    //add more tokens
+  // Single-character tokens.
+   LEFT_BRACE, RIGHT_BRACE,
+  COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
+  LEFT_PAREN, RIGHT_PAREN,
+  // One or two character tokens.
+  BANG, BANG_EQUAL,
+  EQUAL, EQUAL_EQUAL,
+  GREATER, GREATER_EQUAL,
+  LESS, LESS_EQUAL,
 
+  // Literals.
+  IDENTIFIER, STRING, NUMBER,
+
+  // Keywords.
+  AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR,
+  PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
+
+  $ 
 }TokenType;
 
 typedef struct Token{

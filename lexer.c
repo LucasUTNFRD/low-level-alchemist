@@ -23,7 +23,7 @@ void lexer_clean(Lexer *lexer){
 }
 
 static bool _isAtEnd(Lexer* lexer){
-    return (lexer->readPosition >= lexer->inputLength);
+    return (lexer->readPosition > lexer->inputLength);
 }
 
 static void _lexer_read_char(struct Lexer* lexer){
@@ -46,12 +46,11 @@ static char _lexer_peek_char(struct Lexer *lexer){
 
 
 static void _lexer_skip(Lexer* lexer){
-  while (lexer->character =='\n' || lexer->character == ' '||
-         lexer->character =='\r' || lexer->character == '\t') {
+  while (lexer->character == ' ' || lexer->character == '\t' || lexer->character == '\n' ||
+         lexer->character == '\r') {
     _lexer_read_char(lexer);
   }
 }
-
 void lexer_process_char(Lexer *lexer){
   _lexer_skip(lexer);
   
@@ -59,11 +58,53 @@ void lexer_process_char(Lexer *lexer){
 
   switch (lexer->character) {
     case '(':
-      token=token_create(TOKEN_TYPE_SYMBOL, NULL); 
+      puts("(");
+      token=token_create(LEFT_PAREN, NULL); 
       vector_push(lexer->token_vec, token);
       break;
     case ')':
-      token=token_create(TOKEN_TYPE_SYMBOL, NULL); 
+      puts(")");
+      token=token_create(RIGHT_PAREN, NULL); 
+      vector_push(lexer->token_vec, token);
+      break;
+    case '{':
+      puts("{");
+      token=token_create(RIGHT_BRACE, NULL); 
+      vector_push(lexer->token_vec, token);
+      break;
+    case '}':
+      puts("}");
+      token=token_create(RIGHT_BRACE, NULL); 
+      vector_push(lexer->token_vec, token);
+      break;
+    case '+':
+      puts("+");
+      token=token_create(PLUS, NULL); 
+      vector_push(lexer->token_vec, token);
+      break;
+    case '-':
+      puts("-");
+      token=token_create(MINUS, NULL); 
+      vector_push(lexer->token_vec, token);
+      break;
+    case '.':
+      puts(".");
+      token=token_create(DOT, NULL); 
+      vector_push(lexer->token_vec, token);
+      break;
+    case ',':
+      puts(",");
+      token=token_create(COMMA, NULL); 
+      vector_push(lexer->token_vec, token);
+      break;
+    case ';':
+      puts(";");
+      token=token_create(SEMICOLON, NULL); 
+      vector_push(lexer->token_vec, token);
+      break;
+    case '*':
+      puts("*");
+      token=token_create(STAR, NULL); 
       vector_push(lexer->token_vec, token);
       break;
   }
@@ -71,8 +112,11 @@ void lexer_process_char(Lexer *lexer){
 }
 
 void lexer_tokenize(Lexer* lexer){
+  int callcounter = 0;
   while(!_isAtEnd(lexer)){
     lexer_process_char(lexer);
+    callcounter++;
+    printf("call to lexer_process_char = %d \n",callcounter);
   }
 }
 
