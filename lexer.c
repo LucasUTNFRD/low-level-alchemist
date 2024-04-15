@@ -1,7 +1,9 @@
 #include "lexer.h"
 #include "helpers/vector.h"
+#include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
-
+#include <ctype.h>
 
 Lexer* lexer_create(const char *input){
     struct Lexer* lexer = malloc(sizeof(struct Lexer));
@@ -23,7 +25,7 @@ void lexer_clean(Lexer *lexer){
 }
 
 static bool _isAtEnd(Lexer* lexer){
-    return (lexer->readPosition > lexer->inputLength);
+    return (lexer->readPosition >= lexer->inputLength);
 }
 
 static void _lexer_read_char(struct Lexer* lexer){
@@ -51,6 +53,7 @@ static void _lexer_skip(Lexer* lexer){
     _lexer_read_char(lexer);
   }
 }
+
 void lexer_process_char(Lexer *lexer){
   _lexer_skip(lexer);
   
@@ -107,7 +110,81 @@ void lexer_process_char(Lexer *lexer){
       token=token_create(STAR, NULL); 
       vector_push(lexer->token_vec, token);
       break;
+    case '=':
+      if(_lexer_peek_char(lexer) == '='){
+        _lexer_read_char(lexer);
+        token=token_create(EQUAL_EQUAL, NULL);
+        vector_push(lexer->token_vec, token);
+        puts("==");
+      } else {
+        puts("=");
+        token=token_create(EQUAL_EQUAL,NULL);
+        vector_push(lexer->token_vec, token);
+      }
+      break;
+    case '!':
+      if (_lexer_peek_char(lexer)=='=') {
+        _lexer_read_char(lexer);
+        token=token_create(BANG_EQUAL,NULL) ;
+        vector_push(lexer->token_vec, token);
+        puts("!=");
+      }else {
+        token=token_create(BANG,NULL);
+        vector_push(lexer->token_vec, NULL);
+        puts("!");
+      }
+      break;
+    case '<':
+      if (_lexer_peek_char(lexer)=='=') {
+        _lexer_read_char(lexer);
+        token=token_create(LESS_EQUAL,NULL) ;
+        vector_push(lexer->token_vec, token);
+        puts("<=");
+      }else {
+        token=token_create(LESS,NULL);
+        vector_push(lexer->token_vec, token);
+        puts("<");
+      }
+      break;
+    case '>':
+      if (_lexer_peek_char(lexer)=='=') {
+        _lexer_read_char(lexer);
+        token=token_create(GREATER_EQUAL,NULL) ;
+        vector_push(lexer->token_vec, token);
+        puts(">=");
+      }else {
+        token=token_create(GREATER,NULL);
+        vector_push(lexer->token_vec, token);
+        puts(">");
+      }
+      break;
+    case '\0':
+      token=token_create(EOF_TOKEN, NULL);
+      vector_push(lexer->token_vec,token);
+      puts("EOF");
+      break;
+    case '/':
+      //handle comments
+      token=token_create(SLASH, NULL);
+      vector_push(lexer->token_vec,token);
+      break;
+    case '"':
+      break;
+    default:
+      if(isalpha(lexer->character) || lexer->character == '_'){
+
+      }else if (isdigit(lexer->character)) {
+  
+      }else {
+        fprintf(stderr, "Error: character '%c' is not alphanumeric",lexer->character);
+        exit(EXIT_FAILURE);
+      }
   }
+  //handle identifiers
+  //handle numbers
+  //handle string literals
+
+
   _lexer_read_char(lexer);
 }
 
@@ -127,5 +204,4 @@ Token* token_create(TokenType type,char *lexeme){
 
   return token;
 }
-
 
