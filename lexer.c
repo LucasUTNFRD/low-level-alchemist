@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
 Lexer* lexer_create(const char *input){
     struct Lexer* lexer = malloc(sizeof(struct Lexer));
@@ -172,7 +173,20 @@ void lexer_process_char(Lexer *lexer){
       break;
     default:
       if(isalpha(lexer->character) || lexer->character == '_'){
-
+        //handle identifiers
+        size_t len = 0;
+        const char *identifier  = _lexer_read_identifier(lexer,&len);
+        
+        char *literal = malloc(len+1);
+        strncpy(literal,identifier,len);
+        literal[len] = '\0';
+        TokenType type = hm_get(keywords,literal);
+        if(type == NULL){
+          type = IDENTIFIER;
+        }
+        token = token_create(type,literal);
+        vector_push(lexer->token_vec,token);
+        
       }else if (isdigit(lexer->character)) {
   
       }else {
@@ -186,6 +200,19 @@ void lexer_process_char(Lexer *lexer){
 
 
   _lexer_read_char(lexer);
+}
+
+// this function loop under isalpha condition and save the length of the string readsa
+static const char *_lexer_read_identifier(Lexer *lexer,size_t *len){
+  size_t position = lexer->position;
+
+  while (isalpha(lexer->character)|| lexer->character =='_') {
+    _lexer_read_char(lexer);
+  }
+  
+  *len = lexer->readPosition - position; //gives the size of string
+
+  return lexer->input + lexer->position;
 }
 
 void lexer_tokenize(Lexer* lexer){
