@@ -1,8 +1,28 @@
 #include "lexer.h"
 #include "helpers/vector.h"
 #include <stdio.h>
+#include "helpers/hashtable.h"
 
 int main() {
+
+    Map *keyword_dict = map_new();
+    map_insert(keyword_dict,"if",IF);
+    map_insert(keyword_dict,"else",ELSE);
+    map_insert(keyword_dict,"or",OR);
+    map_insert(keyword_dict,"class",CLASS);
+    map_insert(keyword_dict,"false",IF);
+    map_insert(keyword_dict,"nil",ELSE);
+    map_insert(keyword_dict,"for",OR);
+    map_insert(keyword_dict,"print",CLASS);
+    map_insert(keyword_dict,"return",IF);
+    map_insert(keyword_dict,"super",ELSE);
+    map_insert(keyword_dict,"this",OR);
+    map_insert(keyword_dict,"true",CLASS);
+    map_insert(keyword_dict,"var",IF);
+    map_insert(keyword_dict,"while",ELSE);
+    map_insert(keyword_dict,"fun",ELSE);
+    map_insert(keyword_dict,"and",ELSE);
+
   const char *input = "(==) (!=)& <";
 
   Lexer* lexer = lexer_create(input);

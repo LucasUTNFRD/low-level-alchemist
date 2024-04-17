@@ -1,0 +1,25 @@
+#ifndef TYPES_H
+#define TYPES_H
+
+typedef enum{
+  // Single-character tokens.
+   LEFT_BRACE, RIGHT_BRACE,
+  COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
+  LEFT_PAREN, RIGHT_PAREN,
+  // One or two character tokens.
+  BANG, BANG_EQUAL,
+  EQUAL, EQUAL_EQUAL,
+  GREATER, GREATER_EQUAL,
+  LESS, LESS_EQUAL,
+
+  // Literals.
+  IDENTIFIER, STRING, NUMBER,
+
+  // Keywords.
+  AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR,
+  PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
+
+  EOF_TOKEN 
+}TokenType;
+
+#endif // !TYPES_H

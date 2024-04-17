@@ -1,10 +1,14 @@
 #include "lexer.h"
+#include "helpers/hashtable.h"
+#include "helpers/types.h"
 #include "helpers/vector.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+
+
 
 Lexer* lexer_create(const char *input){
     struct Lexer* lexer = malloc(sizeof(struct Lexer));
@@ -14,7 +18,7 @@ Lexer* lexer_create(const char *input){
     lexer->position = 0;
     lexer->readPosition = 0;
     lexer->token_vec = vector_create(sizeof(Token));
-
+    
     _lexer_read_char(lexer);
 
     return lexer;
@@ -175,13 +179,13 @@ void lexer_process_char(Lexer *lexer){
       if(isalpha(lexer->character) || lexer->character == '_'){
         //handle identifiers
         size_t len = 0;
-        const char *identifier  = _lexer_read_identifier(lexer,&len);
+        static const char *identifier  = _lexer_read_identifier(lexer,&len);
         
         char *literal = malloc(len+1);
         strncpy(literal,identifier,len);
         literal[len] = '\0';
-        TokenType type = hm_get(keywords,literal);
-        if(type == NULL){
+        TokenType type =map_get(keyword_dict, literal) ;
+        if(type == -1){
           type = IDENTIFIER;
         }
         token = token_create(type,literal);

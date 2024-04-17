@@ -2,15 +2,14 @@
 #define HT_H
 
 //API design
-#define HASHMAP_SIZE 16
-
-//we use a hashmap using lienar probing to use cpu cache optimization, instead of using linked lists.
-
 #include <stdlib.h>
+#include "vector.h"
+#include "types.h"
+#define HASHMAP_SIZE 16
 
 typedef struct map_entry{
   char *key;
-  void *value;
+  TokenType type;
 } map_entry;
 
 typedef struct{
@@ -19,11 +18,12 @@ typedef struct{
   size_t capacity;
 }Map;
 
-Map *map_new(void);
+Map *map_new();
 
 void map_delete(Map* map);
 
-void* map_get(Map* map,char* key);
+TokenType map_get(Map* map,char* key);
 
+void map_insert(Map *map,char *key,TokenType type);
 
 #endif // !HT_H
