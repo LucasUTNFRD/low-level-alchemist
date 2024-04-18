@@ -6,7 +6,27 @@
 #include <stdlib.h>
 #include <string.h>
 #include "helpers/vector.h"
-#include "helpers/types.h"
+
+typedef enum{
+  // Single-character tokens.
+   LEFT_BRACE, RIGHT_BRACE,
+  COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
+  LEFT_PAREN, RIGHT_PAREN,
+  // One or two character tokens.
+  BANG, BANG_EQUAL,
+  EQUAL, EQUAL_EQUAL,
+  GREATER, GREATER_EQUAL,
+  LESS, LESS_EQUAL,
+
+  // Literals.
+  IDENTIFIER, STRING, NUMBER,
+
+  // Keywords.
+  AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR,
+  PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
+
+  EOF_TOKEN 
+}TokenType;
 
 
 typedef struct Token{
@@ -26,6 +46,8 @@ typedef struct Lexer {
 
 }Lexer;
 
+
+
 //lexer functions
 
 Lexer* lexer_create(const char *input);
@@ -35,9 +57,10 @@ static void _lexer_read_char(struct Lexer* lexer);
 static char _lexer_peek_char(struct Lexer* lexer);
 void lexer_tokenize(Lexer *lexer);
 void lexer_process_char(Lexer* lexer);
-static const char *_lexer_read_identifier(Lexer *lexer,size_t *len);
+const char *_lexer_read_identifier(Lexer *lexer,size_t *len);
 //token functions
 Token* token_create(TokenType type,char *lexeme);
-
+TokenType _getTokenType(char *literal,size_t len);
+const char *_lexer_read_int(Lexer *lexer, size_t *len) ;
 #endif /* LEXER_H */
 

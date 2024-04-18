@@ -1,4 +1,4 @@
-OBJECTS=  ./build/helpers/vector.o ./build/lexer.o ./build/helpers/hashtable.o
+OBJECTS=  ./build/helpers/vector.o ./build/lexer.o 
 INCLUDES= -I./
 
 all: ${OBJECTS}
@@ -10,9 +10,6 @@ all: ${OBJECTS}
 
 ./build/helpers/vector.o: ./helpers/vector.c
 	gcc ./helpers/vector.c ${INCLUDES} -o ./build/helpers/vector.o -g -c
-
-./build/helpers/hashtable.o: ./helpers/hashtable.c
-	gcc ./helpers/hashtable.c ${INCLUDES} -o ./build/helpers/hashtable.o -g -c
 
 clean:
 	rm ./main

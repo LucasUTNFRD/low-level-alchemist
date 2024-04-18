@@ -1,6 +1,4 @@
 #include "lexer.h"
-#include "helpers/hashtable.h"
-#include "helpers/types.h"
 #include "helpers/vector.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -179,19 +177,28 @@ void lexer_process_char(Lexer *lexer){
       if(isalpha(lexer->character) || lexer->character == '_'){
         //handle identifiers
         size_t len = 0;
-        static const char *identifier  = _lexer_read_identifier(lexer,&len);
-        
-        char *literal = malloc(len+1);
-        strncpy(literal,identifier,len);
-        literal[len] = '\0';
-        TokenType type =map_get(keyword_dict, literal) ;
-        if(type == -1){
-          type = IDENTIFIER;
-        }
-        token = token_create(type,literal);
+        const char *literal = _lexer_read_identifier(lexer, &len);
+        // debug output
+        // if (literal) {
+        //   printf("Identifier found: %.*s the lenght is also %d \n", (int)len, literal,len);
+        // } else {
+        //   printf("No identifier found.\n");
+        // }
+        //tuve que harcodear el -1 porque leia un caracter en blanco siempre
+        //lo que hacia que nunca compare bien string con string.
+        TokenType type= _getTokenType(literal,len-1);
+
+        token = token_create(type, strndup(literal,len-1));
         vector_push(lexer->token_vec,token);
-        
+
       }else if (isdigit(lexer->character)) {
+        size_t len =0;
+        const char* integer = _lexer_read_int(lexer,&len);
+        const char* literal_integer = NULL;
+
+        literal_integer = strndup(integer,len);
+        token = token_create(NUMBER,literal_integer);
+        vector_push(lexer->token_vec,token);
   
       }else {
         fprintf(stderr, "Error: character '%c' is not alphanumeric",lexer->character);
@@ -206,25 +213,82 @@ void lexer_process_char(Lexer *lexer){
   _lexer_read_char(lexer);
 }
 
+const char *_lexer_read_int(Lexer *lexer, size_t *len) {
+  size_t position = lexer->position;
+
+  while ('0' <= lexer->character && '9' >= lexer->character)  {
+    _lexer_read_char(lexer);
+  }
+
+  if (len) {
+    *len = lexer->position - position;
+  }
+
+  return lexer->input + position;
+}
+
+
 // this function loop under isalpha condition and save the length of the string readsa
-static const char *_lexer_read_identifier(Lexer *lexer,size_t *len){
+const char *_lexer_read_identifier(Lexer *lexer,size_t *len){
   size_t position = lexer->position;
 
   while (isalpha(lexer->character)|| lexer->character =='_') {
+    _lexer_skip(lexer);
     _lexer_read_char(lexer);
   }
-  
-  *len = lexer->readPosition - position; //gives the size of string
-
-  return lexer->input + lexer->position;
+  if (len) {
+    *len = lexer->readPosition - position; //gives the size of string
+  } 
+  // printf("%d\n",(int)position);
+  // printf("%s\n",lexer->input);
+  return lexer->input + position;
 }
 
+TokenType _getTokenType(char *literal,size_t len){
+    if (strncmp(literal, "fun", len) == 0) {
+    return FUN;
+  } else if (strncmp(literal, "and", len) == 0) {
+    return AND;
+  } else if (strncmp(literal, "class", len) == 0) {
+    return CLASS;
+  } else if (strncmp(literal, "else", len) == 0) {
+    return ELSE;
+  } else if (strncmp(literal, "false", len) == 0) {
+    return FALSE;
+  } else if (strncmp(literal, "for", len) == 0) {
+    return FOR;
+  } else if (strncmp(literal, "if", len) == 0) {
+    return IF;
+  } else if (strncmp(literal, "nil", len) == 0) {
+    return NIL;
+  } else if (strncmp(literal, "or", len) == 0) {
+    return OR;
+  } else if (strncmp(literal, "print", len) == 0) {
+    return PRINT;
+  } else if (strncmp(literal, "return", len) == 0) {
+    return RETURN;
+  } else if (strncmp(literal, "super", len) == 0) {
+    return SUPER;
+  } else if (strncmp(literal, "true", len) == 0) {
+    return TRUE;
+  } else if (strncmp(literal, "while", len) == 0) {
+    return WHILE;
+  } else if (strncmp(literal, "this", len) == 0) {
+    return THIS;
+  } else if (strncmp(literal, "var", len) == 0) {
+    return VAR;
+  }
+
+  return IDENTIFIER;
+}
+
+
 void lexer_tokenize(Lexer* lexer){
-  int callcounter = 0;
+  // int callcounter = 0;
   while(!_isAtEnd(lexer)){
     lexer_process_char(lexer);
-    callcounter++;
-    printf("call to lexer_process_char = %d \n",callcounter);
+    // callcounter++;
+    // printf("call to lexer_process_char = %d \n",callcounter);
   }
 }
 
