@@ -25,6 +25,7 @@ void vector_push(Vector *vector,void *element);
 void vector_resize(Vector *vector);
 void vector_get(Vector *vector, size_t index);
 void* vector_at(Vector *vector,size_t index);
+size_t vector_size(Vector *vector);
 
 
 #endif // !VECTOR_H

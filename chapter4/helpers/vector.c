@@ -47,5 +47,7 @@ void vector_push(Vector *vector, void *element){
   vector->size++;
 }
 
-
+size_t vector_size(Vector *vector){
+  return vector->size;
+}
 
