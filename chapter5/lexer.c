@@ -64,52 +64,52 @@ void lexer_process_char(Lexer *lexer){
 
   switch (lexer->character) {
     case '(':
-      puts("(");
+      // puts("(");
       token=token_create(LEFT_PAREN, NULL); 
       vector_push(lexer->token_vec, token);
       break;
     case ')':
-      puts(")");
+      // puts(")");
       token=token_create(RIGHT_PAREN, NULL); 
       vector_push(lexer->token_vec, token);
       break;
-    case '{':
-      puts("{");
+    // case '{':
+      // puts("{");
       token=token_create(RIGHT_BRACE, NULL); 
       vector_push(lexer->token_vec, token);
       break;
     case '}':
-      puts("}");
+      // puts("");
       token=token_create(RIGHT_BRACE, NULL); 
       vector_push(lexer->token_vec, token);
       break;
     case '+':
-      puts("+");
+      // puts("+") ;
       token=token_create(PLUS, NULL); 
       vector_push(lexer->token_vec, token);
       break;
     case '-':
-      puts("-");
+      // puts("-");
       token=token_create(MINUS, NULL); 
       vector_push(lexer->token_vec, token);
       break;
     case '.':
-      puts(".");
+      // puts("");
       token=token_create(DOT, NULL); 
       vector_push(lexer->token_vec, token);
       break;
     case ',':
-      puts(",");
+      // puts(",");
       token=token_create(COMMA, NULL); 
       vector_push(lexer->token_vec, token);
       break;
     case ';':
-      puts(";");
+      // puts(";");
       token=token_create(SEMICOLON, NULL); 
       vector_push(lexer->token_vec, token);
       break;
     case '*':
-      puts("*");
+      // puts("*");
       token=token_create(STAR, NULL); 
       vector_push(lexer->token_vec, token);
       break;
@@ -118,9 +118,9 @@ void lexer_process_char(Lexer *lexer){
         _lexer_read_char(lexer);
         token=token_create(EQUAL_EQUAL, NULL);
         vector_push(lexer->token_vec, token);
-        puts("==");
+        // put("==");
       } else {
-        puts("=");
+        // puts("=");
         token=token_create(EQUAL_EQUAL,NULL);
         vector_push(lexer->token_vec, token);
       }
@@ -130,11 +130,11 @@ void lexer_process_char(Lexer *lexer){
         _lexer_read_char(lexer);
         token=token_create(BANG_EQUAL,NULL) ;
         vector_push(lexer->token_vec, token);
-        puts("!=");
+        // puts("!=");
       }else {
         token=token_create(BANG,NULL);
         vector_push(lexer->token_vec, NULL);
-        puts("!");
+        // pus("!");
       }
       break;
     case '<':
@@ -142,11 +142,11 @@ void lexer_process_char(Lexer *lexer){
         _lexer_read_char(lexer);
         token=token_create(LESS_EQUAL,NULL) ;
         vector_push(lexer->token_vec, token);
-        puts("<=");
+        // puts("<=");
       }else {
         token=token_create(LESS,NULL);
         vector_push(lexer->token_vec, token);
-        puts("<");
+        // puts("<");
       }
       break;
     case '>':
@@ -154,17 +154,17 @@ void lexer_process_char(Lexer *lexer){
         _lexer_read_char(lexer);
         token=token_create(GREATER_EQUAL,NULL) ;
         vector_push(lexer->token_vec, token);
-        puts(">=");
+        // puts(">=");
       }else {
         token=token_create(GREATER,NULL);
         vector_push(lexer->token_vec, token);
-        puts(">");
+        // puts(">");
       }
       break;
     case '\0':
       token=token_create(EOF_TOKEN, NULL);
       vector_push(lexer->token_vec,token);
-      puts("EOF");
+      // puts("EOF");
       break;
     case '/':
       //handle comments
