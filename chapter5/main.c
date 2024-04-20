@@ -1,12 +1,7 @@
-#include "lexer.h"
-#include "helpers/vector.h"
-#include <stdio.h>
-
-
-#include "lexer.h"
-#include "helpers/vector.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "include/lexer.h"
+#include "include/vector.h"
 
 // Function to read the contents of a file and return it as a string
 char* read_file(const char* filename) {
@@ -36,7 +31,7 @@ char* read_file(const char* filename) {
 
 int main() {
     // Read the contents of the .c file
-    const char* filename = "input.c";
+    const char* filename = "input.lox";
     char* input = read_file(filename);
 
     // Create a lexer

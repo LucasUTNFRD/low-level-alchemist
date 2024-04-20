@@ -1,5 +1,5 @@
-#include "lexer.h"
-#include "helpers/vector.h"
+#include "include/lexer.h"
+#include "include/vector.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -73,14 +73,14 @@ void lexer_process_char(Lexer *lexer){
       token=token_create(RIGHT_PAREN, NULL); 
       vector_push(lexer->token_vec, token);
       break;
-    // case '{':
+    case '{':
       // puts("{");
       token=token_create(RIGHT_BRACE, NULL); 
       vector_push(lexer->token_vec, token);
       break;
     case '}':
       // puts("");
-      token=token_create(RIGHT_BRACE, NULL); 
+      token=token_create(LEFT_BRACE, NULL); 
       vector_push(lexer->token_vec, token);
       break;
     case '+':
@@ -172,23 +172,16 @@ void lexer_process_char(Lexer *lexer){
       vector_push(lexer->token_vec,token);
       break;
     case '"':
+      _lexer_read_string(lexer);
       break;
     default:
       if(isalpha(lexer->character) || lexer->character == '_'){
         //handle identifiers
         size_t len = 0;
         const char *literal = _lexer_read_identifier(lexer, &len);
-        // debug output
-        // if (literal) {
-        //   printf("Identifier found: %.*s the lenght is also %d \n", (int)len, literal,len);
-        // } else {
-        //   printf("No identifier found.\n");
-        // }
-        //tuve que harcodear el -1 porque leia un caracter en blanco siempre
-        //lo que hacia que nunca compare bien string con string.
-        TokenType type= _getTokenType(literal,len-1);
+        TokenType type= _getTokenType(literal,len);
 
-        token = token_create(type, strndup(literal,len-1));
+        token = token_create(type, strndup(literal,len));
         vector_push(lexer->token_vec,token);
 
       }else if (isdigit(lexer->character)) {
@@ -213,6 +206,24 @@ void lexer_process_char(Lexer *lexer){
   _lexer_read_char(lexer);
 }
 
+void _lexer_read_string(Lexer *lexer){
+  _lexer_read_char(lexer);
+  size_t position = lexer->position;
+  while (_lexer_peek_char(lexer) !='"' && !_isAtEnd(lexer)) {
+    _lexer_read_char(lexer);
+  }
+  if (_isAtEnd(lexer)) {
+    fprintf(stderr,"Error unterminated string.");
+    exit(EXIT_FAILURE);
+  }
+
+  _lexer_read_char(lexer);
+  size_t len = lexer->position - position;
+  char *literal = strndup(lexer->input+position,len);
+  Token *token =token_create(STRING, literal);
+  vector_push(lexer->token_vec,token);
+}
+
 const char *_lexer_read_int(Lexer *lexer, size_t *len) {
   size_t position = lexer->position;
 
@@ -227,14 +238,18 @@ const char *_lexer_read_int(Lexer *lexer, size_t *len) {
   return lexer->input + position;
 }
 
+static uint8_t _isLetter(char ch) {
+  return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_';
+}
+
 
 // this function loop under isalpha condition and save the length of the string readsa
 const char *_lexer_read_identifier(Lexer *lexer,size_t *len){
   size_t position = lexer->position;
 
-  while (isalpha(lexer->character)|| lexer->character =='_') {
-    _lexer_skip(lexer);
+  while (_isLetter(lexer->character) && _isLetter(_lexer_peek_char(lexer))) {
     _lexer_read_char(lexer);
+    // printf("%c\n",lexer->character);
   }
   if (len) {
     *len = lexer->readPosition - position; //gives the size of string

@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include "helpers/vector.h"
+#include "vector.h"
 
 typedef enum{
   // Single-character tokens.
@@ -59,8 +59,10 @@ void lexer_tokenize(Lexer *lexer);
 void lexer_process_char(Lexer* lexer);
 const char *_lexer_read_identifier(Lexer *lexer,size_t *len);
 //token functions
+static uint8_t _isLetter(char ch) ;
 Token* token_create(TokenType type,char *lexeme);
 TokenType _getTokenType(char *literal,size_t len);
 const char *_lexer_read_int(Lexer *lexer, size_t *len) ;
+void _lexer_read_string(Lexer *lexer);
 #endif /* LEXER_H */
 
