@@ -4,6 +4,7 @@
 #include "lexer.h"
 #include "ast.h"
 
-Node *parse(Lexer *lexer);
+#define MATCH(x,type) ((x)==type)
+
 
 #endif // DEBUG
