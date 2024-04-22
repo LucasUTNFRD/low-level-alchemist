@@ -1,15 +1,8 @@
-# implementation of a compiler following the boook Crafting interpreters
+# Compiler Project
 
-### currently working on parser:
-
-### lexer MVP:
-* open a .lox file and tokenize it
-* for tokenization i need to scan char by char and create token outputs
-
-### things to work:
-* Read source from a file and then scann it
-* improve recongition of keywords and lexemes
-  * improve this with a hashmap or a big switch case.
-
-### things i am working:
-* read from input file "-69 * 420":
+## Stage 1: writing the lexer A.K.A scanner.
+    * [ ] Implement Hashmap for keywords
+    * [ ] Add EOF as a token in last element in token_vec
+## Stage 2: writing the parser:
+### the ideas is build a recursive descendent parser:
+    * [ ] Create a basic API for a parser with ASTs.
