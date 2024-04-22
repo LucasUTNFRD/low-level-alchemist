@@ -198,11 +198,6 @@ void lexer_process_char(Lexer *lexer){
         exit(EXIT_FAILURE);
       }
   }
-  //handle identifiers
-  //handle numbers
-  //handle string literals
-
-
   _lexer_read_char(lexer);
 }
 
@@ -299,13 +294,11 @@ TokenType _getTokenType(char *literal,size_t len){
 
 
 void lexer_tokenize(Lexer* lexer){
-  // int callcounter = 0;
   while(!_isAtEnd(lexer)){
     lexer_process_char(lexer);
-    // callcounter++;
-    // printf("call to lexer_process_char = %d \n",callcounter);
   }
 }
+
 
 Token* token_create(TokenType type,char *lexeme){
   Token *token = malloc(sizeof(Token));
