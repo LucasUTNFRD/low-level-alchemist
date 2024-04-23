@@ -48,6 +48,14 @@ int main() {
         printf("Token %d: Type: %d, Literal: %s\n", i, token->type, token->literal);
     }
 
+    //implement parsing logic.
+    Parser* parser = parse(tokens);
+    if(parser->status == COMPILED_FINE){
+      puts("everything compiled fine");
+    }ELSE{
+      puts("Compilation error");
+    }
+
     // Clean up
     lexer_clean(lexer);
     free(input); // Free the memory allocated for the input
