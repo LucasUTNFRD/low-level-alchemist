@@ -243,3 +243,51 @@ Node* find(List *lptr,void *elem){
   }
   return current;
 }
+
+
+void *value_n_from_end(List *lptr, size_t n){
+  if(n == 0){
+    back(lptr);
+  }
+
+  Node *current = lptr->head;
+  Node *helper = lptr->head;
+  
+  
+  //move helper n positions
+  size_t count = 0;
+  while(count<n && helper != NULL){
+    helper = helper->next; 
+    count++;
+  }
+  // If helper is NULL, n is greater than or equal to the length of the list
+  if (helper == NULL) {
+    return NULL;
+  }
+  while(helper!=NULL){
+    helper = helper->next;
+    current=current->next;
+  }
+  return current->value;
+}
+
+void reverse_list(List *lptr) {
+    Node *prev = NULL;
+    Node *current = lptr->head;
+    Node *next = NULL;
+
+    // Traverse the list and reverse the links
+    while (current != NULL) {
+        // Store the next node
+        next = current->next;
+        // Reverse the link
+        current->next = prev;
+        // Move prev and current pointers one step forward
+        prev = current;
+        current = next;
+    }
+
+    // Update the head of the list to point to the last node (prev)
+    lptr->head = prev;
+}
+

@@ -15,13 +15,24 @@ void run_tests() {
 
     printf("Original list: ");
     print_list(list);
+    
+    printf("reversed list: ");
+    reverse_list(list);
+    print_list(list);
+  
+    //value n from end run_tests
+    printf("Value at 2nd position from end: %d\n", *(int*)value_n_from_end(list, 2));
+    printf("Value at 4th position from end: %d\n", *(int*)value_n_from_end(list, 3));
+    printf("Value at 1st position from end: %d\n", *(int*)value_n_from_end(list, 1));
 
+ 
     // Insert an element at a specific index
     int e = 25;
     insert_at(list, 2, &e);
     printf("List after inserting element at index 2: ");
     print_list(list);
-
+    
+    
     // Remove a specific element
     remove_element(list, &c);
     printf("List after removing element 30: ");

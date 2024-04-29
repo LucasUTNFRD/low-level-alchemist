@@ -37,6 +37,8 @@ void insert_at(List *lptr,size_t index,void *elem);
 void reverse_list(List *lptr);
 void remove_element(List *lprt,void *elem);
 void print_list(List *lptr);
+void *value_n_from_end(List *lptr,size_t n);
+void reverse_list(List *lptr) ;
 
 
 #endif //LINKED_LIST_H
