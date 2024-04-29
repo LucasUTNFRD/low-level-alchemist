@@ -3,7 +3,7 @@
 
 
 int main() {
-    // Create a new array to store integers
+    // Create a new array to store integers    u
   Array *arr = new_array(sizeof(int));
 
     // Load the array with numbers
