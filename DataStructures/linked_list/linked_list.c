@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 Node *create_node(void *elem){
   Node *node = malloc(sizeof(Node));
   node->value = elem;
