@@ -1,0 +1,15 @@
+# ninja log v5
+0	25	1714605661145502751	CMakeFiles/my_project.dir/main.c.o	5ac2eed335b72f5f
+1	37	1714605661158836049	CMakeFiles/my_project.dir/test.c.o	ae4c342196621089
+2	56	1714605748471941276	CMakeFiles/my_project.dir/hashmap.c.o	6fad4fa951230c83
+56	98	1714605748515274499	my_project	d252dda9cc79ae4d
+1	48	1714605785851847355	CMakeFiles/my_project.dir/hashmap.c.o	6fad4fa951230c83
+48	79	1714605785881847281	my_project	d252dda9cc79ae4d
+2	48	1714605819028432374	CMakeFiles/my_project.dir/hashmap.c.o	6fad4fa951230c83
+48	74	1714605819051765650	my_project	d252dda9cc79ae4d
+1	51	1714605833481730615	CMakeFiles/my_project.dir/hashmap.c.o	6fad4fa951230c83
+51	81	1714605833511730542	my_project	d252dda9cc79ae4d
+2	50	1714605906828223317	CMakeFiles/my_project.dir/test.c.o	ae4c342196621089
+50	74	1714605906851556596	my_project	d252dda9cc79ae4d
+0	41	1714605919484860592	CMakeFiles/my_project.dir/test.c.o	ae4c342196621089
+41	78	1714605919521527174	my_project	d252dda9cc79ae4d
