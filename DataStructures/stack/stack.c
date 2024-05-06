@@ -52,7 +52,7 @@ bool isValidParentheses(char *input) {
 }
 
 int main() {
-    char *input1 = "(()";
+    char *input1 = "(())";
     if (isValidParentheses(input1)) {
         puts("Input is a valid sequence of parentheses\n");
     } else {
