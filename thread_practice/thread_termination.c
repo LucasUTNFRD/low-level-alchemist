@@ -1,37 +1,47 @@
-//
-// Created by lucas on 5/5/24.
-//
-
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-void *thr_fn1(void *arg){
-    printf("thread 1 returning\n");
-    return ((void *) 1);
+#define Pthread_create(thread, attr, start_routine, arg) \
+    if (pthread_create(thread, attr, start_routine, arg) != 0) { \
+        perror("pthread_create"); \
+        exit(EXIT_FAILURE); \
+    }
+
+#define Pthread_join(thread, value_ptr) \
+    if (pthread_join(thread, value_ptr) != 0) { \
+        perror("pthread_join"); \
+        exit(EXIT_FAILURE); \
+    }
+
+#define Malloc(size) ({ \
+    void *ptr = malloc(size); \
+    if (ptr == NULL) { \
+        fprintf(stderr, "Error: Memory allocation failed\n"); \
+        exit(EXIT_FAILURE); \
+    } \
+    ptr; \
+})
+
+
+typedef struct { int a;int b; } myarg_t;
+typedef struct { int x;int y; } myret_t;
+
+void *mythread(void *args){
+    myret_t *rvals= Malloc(sizeof(myret_t));
+    rvals->x =1;
+    rvals->y = 2;
+    return (void *) rvals;
 }
 
-void *thr_fn2(void *arg){
-    printf("thread 2 exiting\n");
-    pthread_exit((void *) 2);
+int main(){
+    pthread_t p;
+    myret_t *rvals;
+    myarg_t args = {10,20};
+    Pthread_create(&p,NULL, mythread,&args);
+    Pthread_join(p,(void **) &rvals);
+    printf("returned %d %d\n", rvals->x,rvals->y);
+    free(rvals);
+    return 0;
 }
 
-int main(void){
-    int err;
-    pthread_t tid1,tid2;
-    void *tret;
-
-    err = pthread_create(&tid1,NULL,thr_fn1,NULL);
-    if(err!=0) perror("cant create thread 1");
-
-    err = pthread_create(&tid2,NULL,thr_fn2,NULL);
-    if(err!=0) perror("cant create thread 2");
-
-    err = pthread_join(tid1, &tret);
-    if(err!=0) perror("cant join with thread 1");
-    printf("thread  1 exit code %ld\n", (long)tret);
-    err = pthread_join(tid2,&tret);
-    if(err!=0) perror("cant join with thread 2");
-    printf("thread 2 exit code %ld\n",(long)tret);
-    exit(0);
-}

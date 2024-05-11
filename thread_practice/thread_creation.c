@@ -1,38 +1,25 @@
-//
-// Created by lucas on 5/5/24.
-//
-
-//create one thread and print the proces and thread ids of the new thread and the intial thread.
-#include <stdio.h>
 #include <pthread.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include <stdio.h>
 
-void printids(const char *s) {
-    pid_t pid;
-    pthread_t tid;
+typedef struct {
+    int a;
+    int b;
+}myarg_t;
 
-    pid = getpid();
-    tid = pthread_self();
-    printf("%s pid %lu tid %lu (0x%lx)\n", s, (unsigned long) pid,(unsigned long) tid, (unsigned long) tid);
-
+void *mythread(void *arg){
+    myarg_t  *args = (myarg_t *) arg;
+    printf("%d %d\n",args->a,args->b);
+    return NULL;
 }
 
-void *thr_fn(void *arg){
-    printids("new thread: ");
-    return((void *)0);
-}
-pthread_t ntid;
-int main(void){
-    int err;
-    err = pthread_create(&ntid,NULL, thr_fn,NULL);
-    if(err!=0){
-        perror("cant create thread");
+int main(){
+    pthread_t p;
+    myarg_t args = {10,20};
+
+    int rc = pthread_create(&p,NULL,mythread,&args);
+    if(rc!=0){
+        perror("thread creation failed");
     }
-    printids("main thread: ");
-    sleep(1);
-    // if it doesnt sleep, the main thread might exit, thereby temrinating the entire process before
-    //the new thread get chance to run.
+    sleep(1); //handle races
     exit(0);
 }

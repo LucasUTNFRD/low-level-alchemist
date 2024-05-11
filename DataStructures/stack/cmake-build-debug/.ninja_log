@@ -2,3 +2,6 @@
 6	59	1714927973062388822	CMakeFiles/my_project.dir/array.c.o	90cde6ddf33afe54
 2	45	1714927985785729842	CMakeFiles/my_project.dir/stack.c.o	f511c2574bfaa605
 45	68	1714927985809063190	my_project	549105fe9e11c24b
+5	43	1715298398582878009	CMakeFiles/my_project.dir/stack.c.o	f511c2574bfaa605
+5	62	1715298398602878049	CMakeFiles/my_project.dir/array.c.o	90cde6ddf33afe54
+62	86	1715298398626211428	my_project	549105fe9e11c24b

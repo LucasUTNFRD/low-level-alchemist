@@ -26,14 +26,12 @@ int main(){
     while (letra <= 'Z'){
       write(fd, &letra, 1);
       letra+=2;
-      printf("soy el padre\n");
       kill(pid, SIGUSR1);
       pause();
     }
   } else {
     while (letrah <= 'z'){
       pause();
-      printf("soy el hijo\n");
       write(fd, &letrah,1);
       letrah+=2;
       kill(getppid(), SIGUSR1);
