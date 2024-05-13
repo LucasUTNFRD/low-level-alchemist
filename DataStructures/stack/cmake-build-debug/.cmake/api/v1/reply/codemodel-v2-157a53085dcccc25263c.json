@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/lucas/facultad/low-level-alchemist/DataStructures/stack/cmake-build-debug",
-		"source" : "/home/lucas/facultad/low-level-alchemist/DataStructures/stack"
+		"build" : "/home/lucas/low-level-alchemist/DataStructures/stack/cmake-build-debug",
+		"source" : "/home/lucas/low-level-alchemist/DataStructures/stack"
 	},
 	"version" : 
 	{

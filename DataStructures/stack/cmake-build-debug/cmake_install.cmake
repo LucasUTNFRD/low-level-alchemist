@@ -1,4 +1,4 @@
-# Install script for directory: /home/lucas/facultad/low-level-alchemist/DataStructures/stack
+# Install script for directory: /home/lucas/low-level-alchemist/DataStructures/stack
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/lucas/facultad/low-level-alchemist/DataStructures/stack/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/lucas/low-level-alchemist/DataStructures/stack/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
